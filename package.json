@@ -17,6 +17,7 @@
     "name" : "Alec Aldrine Lakra",
     "email" : "lakraalec123@gmail.com"
   },
+  "license": "MIT",
   "keywords": [
     "wysiwyg",
     "slate",

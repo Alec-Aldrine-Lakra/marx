@@ -485,7 +485,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                     </div>
                     <div class="footer">
                         <button class="cancel" (click)="closeAttachPopover()">Cancel</button><button
-                            (click)="saveFiles()" class="upload">Save</button>
+                            (click)="saveFiles()" class="upload" [class.disabled]="filesArray.length === 0">Save</button>
                     </div>
                 </div>
             </div>

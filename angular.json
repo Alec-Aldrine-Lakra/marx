@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "marx-editor": {
+      "projectType": "library",
+      "root": "projects/marx-editor",
+      "sourceRoot": "projects/marx-editor/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/marx-editor/tsconfig.lib.json",
+            "project": "projects/marx-editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/marx-editor/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/marx-editor/src/test.ts",
+            "tsConfig": "projects/marx-editor/tsconfig.spec.json",
+            "karmaConfig": "projects/marx-editor/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/marx-editor/tsconfig.lib.json",
+              "projects/marx-editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": "59355d17-bd96-4cfd-8f21-2ebe47fc0c4e"
+  },
+  "defaultProject": "marx-editor"
+}

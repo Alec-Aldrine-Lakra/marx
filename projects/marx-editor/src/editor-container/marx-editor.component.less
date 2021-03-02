@@ -1,0 +1,255 @@
+.editor-container {
+    position     : relative;
+    display      : flex;
+    flex-wrap    : wrap;
+    border-radius: 2px;
+    border       : 1px solid #f1f1f1;
+
+    .editable-block {
+        display      : block;
+        outline      : none;
+        min-height   : 150px;
+        padding      : 25px;
+        border       : 1px solid #f1f1f1;
+        border-radius: 2px 2px 0 0;
+        border-bottom: transparent;
+        width        : 100%;
+        max-height: 300px;
+        overflow: auto;
+
+        &:hover,
+        &:focus {
+            // box-shadow: 0 0 0 0;
+            outline     : none;
+            border-color: #1e5dd3;
+            box-shadow  : 0 0 5px rgba(30, 93, 211, 0.27);
+
+            &+.editor-tools {
+                box-shadow: 0 0 5px rgba(30, 93, 211, 0.27);
+            }
+        }
+
+        &.top {
+            order: 2;
+            border-top: transparent;
+            border-bottom: 1px solid #F1F1F1;
+            border-radius: 0 0 2px 2px;
+            &:hover, &:focus {
+                outline     : none;
+                border-color: #1e5dd3;
+                box-shadow  : 0 0 5px rgba(30, 93, 211, 0.27);
+
+                &+.editor-tools {
+                    box-shadow: 0 0 5px rgba(30, 93, 211, 0.27);
+                }
+            }
+        }
+
+        &.bottom {
+            order: 1;
+        }
+
+        .image-resize {
+            max-width    : 100%;
+            display      : inline-block;
+            outline      : none;
+            margin-bottom: -4px;
+
+            img {
+                width        : 100%;
+                height       : 100%;
+                margin-bottom: -4px;
+            }
+        }
+
+        .image-container {
+            display : inline-block;
+            position: relative;
+            border  : 4px solid transparent;
+
+            &.left {
+                float: left;
+            }
+
+            &.right {
+                float: right;
+            }
+
+            ul {
+                padding: 0;
+                margin : 0;
+
+                &.navigation {
+                    display        : flex;
+                    justify-content: center;
+                    position       : absolute;
+                    bottom         : 100%;
+                    left           : 0;
+                    right          : 0;
+                    margin-bottom  : 10px;
+
+                    li {
+                        list-style     : none;
+                        display        : flex;
+                        justify-content: center;
+                        box-shadow     : 0px 3px 6px #1E5DD326;
+                        border-radius  : 4px;
+                        background     : #F3F3F3;
+                        padding        : 5px;
+                        position       : relative;
+
+                        &:after {
+                            content     : "";
+                            border-top  : 10px solid #F3F3F3;
+                            border-right: 10px solid transparent;
+                            border-left : 10px solid transparent;
+                            position    : absolute;
+                            top         : 100%;
+                        }
+
+                        button {
+                            height       : 30px;
+                            width        : 30px;
+                            border-radius: 2px;
+                            display      : flex;
+                            cursor       : pointer;
+                            border       : none;
+                            background   : #FFFFFF;
+                            outline      : none;
+
+                            svg {
+                                height: 30px;
+                                width : 30px;
+                                fill  : #5a5a5a;
+                                stroke: transparent;
+                            }
+
+                            &:hover {
+                                background: #F3F3F3;
+
+                                svg {
+                                    fill  : #161b2f;
+                                    stroke: transparent;
+                                }
+                            }
+
+                            &+button {
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .resize-pointer {
+                background: transparent;
+                position  : absolute;
+                height    : 10px;
+                width     : 10px;
+
+                &.top {
+                    cursor: s-resize;
+                    top   : -7px;
+                    left  : calc(50% - 2px);
+
+                    &-left {
+                        top   : -7px;
+                        left  : -7px;
+                        cursor: nwse-resize;
+                    }
+
+                    &-right {
+                        top   : -7px;
+                        right : -7px;
+                        cursor: nesw-resize;
+                    }
+                }
+
+                &.right {
+                    cursor: e-resize;
+                    right : -7px;
+                    top   : calc(50% - 2px);
+                }
+
+                &.bottom {
+                    cursor: s-resize;
+                    bottom: -7px;
+                    left  : calc(50% - 2px);
+
+                    &-left {
+                        bottom: -7px;
+                        left  : -7px;
+                        cursor: nesw-resize;
+                    }
+
+                    &-right {
+                        bottom: -7px;
+                        right : -7px;
+                        cursor: nwse-resize;
+                    }
+                }
+
+                &.left {
+                    cursor: e-resize;
+                    left  : -7px;
+                    top   : calc(50% - 2px);
+                }
+
+                &.active {
+                    background-color: #1e5dd3;
+                }
+            }
+
+            &.active {
+                border-color: #1e5dd3;
+            }
+        }
+    }
+
+    .editor-tools {
+        display      : flex;
+        flex-wrap    : wrap;
+        background   : #ffffff;
+        border-top   : 1px solid #f1f1f1;
+        border-radius: 2px;
+        width        : 100%;
+        padding      : 5px;
+
+        app-editor-menu {
+            display: block;
+            width  : 100%;
+        }
+
+        &.top {
+            order: 1;
+            border-top: none;
+            border-bottom: 1px solid #F1F1F1;
+        }
+
+        &.bottom {
+            order: 2;
+        }
+    }
+}
+
+#LinkInEditor {
+    padding: 20px 20px 20px 20px;
+    border : 1px solid black;
+}
+
+[contenteditable][placeholder]:empty:before,
+input[placeholder]:empty:before {
+    content         : attr(placeholder);
+    position        : absolute;
+    color           : #747576;
+    background-color: transparent;
+    pointer-events  : none;
+
+    _::-webkit-full-page-media,
+    _:future,
+    :root .safari_only {
+
+        opacity: .7;
+
+    }
+}

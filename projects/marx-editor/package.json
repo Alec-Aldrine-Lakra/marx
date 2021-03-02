@@ -1,0 +1,32 @@
+{
+  "name": "marx-editor",
+  "version": "1.0.10",
+  "peerDependencies": {
+    "@angular/common": "^10.1.6",
+    "@angular/core": "^10.1.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "author": {
+      "name" : "Alec Aldrine Lakra",
+      "email" : "lakraalec123@gmail.com"
+  },
+  "keywords": [
+    "wysiwyg",
+    "slate",
+    "paper",
+    "medium",
+    "WYSIWYG Editor",
+    "Rich Text Editor",
+    "Paste From Word",
+    "The Communist Manifesto",
+    "Communism",
+    "Karl Marx",
+    "Marxist",
+    "ckeditor",
+    "tinymce",
+    "quill",
+    "open source editor"
+  ]
+}

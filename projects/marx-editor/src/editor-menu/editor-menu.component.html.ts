@@ -420,7 +420,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                         <input [(ngModel)]="linkTitle" type="text" placeholder="Enter a title">
                     </div>
                     <div class="footer">
-                        <button  type="button" class="cancel" (click)="closeAddLinksPopover()">Cancel</button><button
+                        <button  type="button" class="cancel" (click)="closeAddLinksPopover()">Cancel</button><button type="button"
                             (click)="saveLink()" class="upload">Save</button>
 
                     </div>

@@ -25,7 +25,7 @@ Simply include the marx-editor within your component template file
 
     <marx-editor></marx-editor>
 
-Optional Configurations
+Optional Configurations 
 
     <marx-editor 
         [editorConfig]="<configuration object>" 

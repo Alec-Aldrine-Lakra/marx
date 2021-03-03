@@ -1,6 +1,6 @@
 {
   "name": "marx-editor",
-  "version": "1.0.20",
+  "version": "1.0.24",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

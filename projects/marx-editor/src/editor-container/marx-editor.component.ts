@@ -473,6 +473,13 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
         const str = ' target="_blank" rel="noopener noreferrer"';
         return match + str;
       });
+
+      const bT = ['nav', 'script', 'applet', 'embed', 'noframes', 'noscript', 'form', 'meta', 'iframe'];
+
+      for (let i = 0; i < bT.length; i++) {
+        let tS = new RegExp('<' + bT[i] + '\\b.*>.*</' + bT[i] + '>', 'gi');
+        pastedHtml = pastedHtml.replace(tS, '');
+      }
      //  pastedHtml = this.cleanPaste(pastedHtml);
       document.execCommand('insertHtml', false, pastedHtml);
     }

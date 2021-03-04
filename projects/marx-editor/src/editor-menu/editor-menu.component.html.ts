@@ -3,7 +3,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Bold -->
         <div class="col" data-id="bold">
             <button type="button" data-id="bold" [class.active]="toolbarConfig?.bold" [csTooltip]="'Bold'" placement="bottom"
-                delay="0" type="black" [tooltipMandatory]="true">
+                delay="0"  [tooltipMandatory]="true">
                 <svg width="299" height="299" viewBox="0 0 299 299" fill="none" xmlns="http://www.w3.org/2000/svg"
                     data-id="bold">
                     <g clip-path="url(#clip0)">
@@ -21,7 +21,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Italic -->
         <div class="col" data-id="italic">
             <button type="button" data-id="italic" [class.active]="toolbarConfig?.italic" [csTooltip]="'Italic'" placement="bottom"
-                delay="0" type="black" [tooltipMandatory]="true">
+                delay="0"  [tooltipMandatory]="true">
                 <svg width="299" height="299" viewBox="0 0 299 299" fill="none" xmlns="http://www.w3.org/2000/svg"
                     data-id="italic">
                     <g clip-path="url(#clip0)">
@@ -39,7 +39,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Underline -->
         <div class="col" data-id="underline">
             <button type="button" data-id="underline" [class.active]="toolbarConfig?.underline" [csTooltip]="'Underline'"
-                placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 384 384" data-id="underline"
                     style="enable-background: new 0 0 384 384" xml:space="preserve">
                     <g>
@@ -57,7 +57,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Line through -->
         <div class="col" data-id="strikeThrough">
             <button  type="button" data-id="strikeThrough" [class.active]="toolbarConfig?.strikeThrough" [csTooltip]="'Strike Through'"
-                placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 384 384" xml:space="preserve"
                     data-id="strikeThrough">
                     <g>
@@ -89,7 +89,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- list -->
         <div class="col" clickOutside (clickOutside)="closeListStylesPopover()">
             <button type="button" class="lg" [class.active]="listStyle|| toolbarConfig?.orderedList || toolbarConfig?.unorderedList"
-                (click)="listStyles()" [csTooltip]="'List Option'" placement="bottom" delay="0" type="black"
+                (click)="listStyles()" [csTooltip]="'List Option'" placement="bottom" delay="0" 
                 [tooltipMandatory]="true">
                 <svg width="595" height="400" viewBox="0 0 595 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -156,7 +156,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Text Align -->
         <div class="col" clickOutside (clickOutside)="closeAlignPopover()" *ngIf="editorConfig?.mode === 'prime'">
             <button type="button" (click)="alignPopover()" [class.active]="alignment" class="lg" [csTooltip]="'Text Alignment'"
-                placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg width="595" height="400" viewBox="0 0 595 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M394.311 356.146H0V400H394.311V356.146Z" />
                     <path d="M284.78 267.11H0V310.963H284.78V267.11Z" />
@@ -251,7 +251,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         </div>
         <!-- Font-Style -->
         <div class="col" clickOutside (clickOutside)="closeFontStylePopover()" *ngIf="editorConfig?.mode === 'prime'">
-            <button type="button" (click)="fontStylePopover()" [csTooltip]="'Font Style'" placement="bottom" delay="0" type="black"
+            <button type="button" (click)="fontStylePopover()" [csTooltip]="'Font Style'" placement="bottom" delay="0" 
                 [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 405.333 405.333" xml:space="preserve">
                     <g>
@@ -297,7 +297,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         </div>
         <!-- Font-Size -->
         <div class="col" clickOutside (clickOutside)="closeFontSizePopover()" *ngIf="editorConfig?.mode === 'prime'">
-            <button  type="button" class="lg" (click)="fontSizePopover()" [csTooltip]="'Font Size'" placement="bottom" delay="0" type="black"
+            <button  type="button" class="lg" (click)="fontSizePopover()" [csTooltip]="'Font Size'" placement="bottom" delay="0" 
                 [tooltipMandatory]="true">
                 <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M55.6363 235.199H148.364L165.055 275.999H204L115.909 72H88.0905L0 276H38.9454L55.6363 235.199ZM102 108.72L136.679 201.818H67.319L102 108.72Z" />
@@ -317,7 +317,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Font Family-->
         <div class="col" clickOutside (clickOutside)="fontFamily = false;" *ngIf="editorConfig?.mode === 'prime'">
             <button  type="button" (click)="openfontFamily()" [class.active]="fontFamily" [csTooltip]="'Font Family'" [class.active]="fontStyles.includes(toolbarConfig?.fontStyle)"
-                placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg viewBox="0 0 20 20">
                     <path
                         d="M11.03 3h6.149a.75.75 0 1 1 0 1.5h-5.514L11.03 3zm1.27 3h4.879a.75.75 0 1 1 0 1.5h-4.244L12.3 6zm1.27 3h3.609a.75.75 0 1 1 0 1.5h-2.973L13.57 9zm-2.754 2.5L8.038 4.785 5.261 11.5h5.555zm.62 1.5H4.641l-1.666 4.028H1.312l5.789-14h1.875l5.789 14h-1.663L11.436 13z">
@@ -337,7 +337,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Fill Color -->
         <div class="col" clickOutside (clickOutside)="fillColor[0] = false;" *ngIf="editorConfig?.colorPalette && editorConfig?.mode === 'prime'">
             <button  type="button" (click)="fillColor[0] = !fillColor[0]; fillColor[1] = false;" [class.active]="fillColor[0]"
-                [csTooltip]="'Background Color'" placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                [csTooltip]="'Background Color'" placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg width="298" height="298" viewBox="0 0 298 298" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M235.917 142.791C235.917 142.791 211.083 169.674 211.083 186.25C211.083 199.97 222.196 211.084 235.917 211.084C249.637 211.084 260.75 199.97 260.75 186.25C260.75 169.674 235.917 142.791 235.917 142.791Z" />
@@ -357,7 +357,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Text Color -->
         <div class="col" clickOutside (clickOutside)="fillColor[1] = false;" *ngIf="editorConfig?.colorPalette && editorConfig?.mode === 'prime'">
             <button  type="button" (click)="fillColor[1] = !fillColor[1]; fillColor[0] = false;" [class.active]="fillColor[1]"
-                [csTooltip]="'Text Color'" placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                [csTooltip]="'Text Color'" placement="bottom" delay="0"  [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
                     <g>
                         <g>
@@ -385,7 +385,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Link -->
         <div class="col" clickOutside (clickOutside)="closeAddLinksPopover()">
             <button  type="button" (click)="addLink = true;" [class.active]="addLink" [csTooltip]="'Add Link'" placement="bottom"
-                delay="0" type="black" [tooltipMandatory]="true">
+                delay="0"  [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 426.667 426.667" xml:space="preserve">
                     <g>
                         <g>
@@ -400,7 +400,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                     </g>
                 </svg>
             </button>
-            <div class="popup-mask link" *ngIf="addLink">
+            <div class="popup-mask link" *ngIf="addLink" [style.zIndex]="editorConfig?.popupZIndex | pzIndex:3">
                 <div class="popover attach">
                     <div class="head">
                         <h3>Insert Link</h3>
@@ -430,7 +430,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Attachment -->
         <div class="col" clickOutside (clickOutside)="closeAttachPopover()" *ngIf="editorConfig?.file">
             <button  type="button" (click)="upload = true" [class.active]="upload" [csTooltip]="'Upload File'" placement="bottom"
-                delay="0" type="black" [tooltipMandatory]="true">
+                delay="0"  [tooltipMandatory]="true">
                 <svg width="199" height="199" viewBox="0 0 199 199" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0)">
                         <path
@@ -443,7 +443,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                     </defs>
                 </svg>
             </button>
-            <div class="popup-mask" *ngIf="upload">
+            <div class="popup-mask" *ngIf="upload" [style.zIndex]="editorConfig?.popupZIndex | pzIndex:3">
                 <div class="popover attach">
                     <div class="head">
                         <h3>Attach File</h3>
@@ -493,7 +493,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Image -->
         <div class="col" clickOutside (clickOutside)="clickOutsideImage()" *ngIf="editorConfig?.mode === 'prime' && false">
             <button type="button" (click)="uploadImage = true" [class.active]="uploadImage" [csTooltip]="'Add Image'"
-                placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                placement="bottom" delay="0"  [tooltipMandatory]="true">
 
                 <svg width="199" height="199" viewBox="0 0 199 199" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0)">
@@ -634,7 +634,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <div class="child-row" *ngIf="!moreOptionsButton">
             <!-- Quote -->
             <div class="col" data-id="quote">
-                <button type="button" data-id="quote" [csTooltip]="'Quote'" placement="bottom" delay="0" type="black" [class.active]="toolbarConfig?.quote"
+                <button type="button" data-id="quote" [csTooltip]="'Quote'" placement="bottom" delay="0"  [class.active]="toolbarConfig?.quote"
                     [tooltipMandatory]="true">
                     <svg width="299" height="299" viewBox="0 0 299 299" fill="none" xmlns="http://www.w3.org/2000/svg"
                         data-id="quote">
@@ -647,7 +647,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             <!-- Superscript -->
             <div class="col" data-id="superscript">
                 <button type="button" [class.active]="toolbarConfig?.superscript" data-id="superscript" [csTooltip]="'Superscript'"
-                    placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                    placement="bottom" delay="0"  [tooltipMandatory]="true">
                     <svg width="200" height="174" viewBox="0 0 200 174" fill="none" data-id="superscript">
                         <path data-id="superscript"
                             d="M85.9381 113.681L139.578 173.934H106.571L69.0088 129.867L32.2984 173.934H0L53.2083 113.681L2.562 56.8192H35.145L70.4356 98.0449L106.001 56.8192H137.163L85.9381 113.681ZM159.28 72.9393L181.389 56.6618C188.928 51.4813 193.881 46.6757 196.255 42.2405C198.627 37.8077 199.812 33.044 199.812 27.9395C199.812 19.6009 197.024 12.8704 191.456 7.74929C185.882 2.62529 178.555 0.0657349 169.477 0.0657349C160.724 0.0657349 153.723 2.65782 148.482 7.83793C143.229 13.0209 140.607 20.8317 140.607 31.2789H157.49C157.49 25.0457 158.596 20.7365 160.802 18.3465C163.008 15.9561 166.031 14.7607 169.882 14.7607C173.727 14.7607 176.765 15.9769 179.019 18.4055C181.264 20.8317 182.384 23.8491 182.384 27.4552C182.384 31.0553 181.346 34.313 179.259 37.2295C177.173 40.1461 171.376 45.0656 161.864 51.9883C153.726 57.939 142.714 63.5448 139.412 68.807L139.578 88.3617H200V72.9393H159.28Z" />
@@ -657,7 +657,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             <!-- Subscript -->
             <div class="col" data-id="subscript">
                 <button type="button" [class.active]="toolbarConfig?.subscript" data-id="subscript" [csTooltip]="'Subscript'"
-                    placement="bottom" delay="0" type="black" [tooltipMandatory]="true">
+                    placement="bottom" delay="0"  [tooltipMandatory]="true">
                     <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"
                         data-id="subscript">
                         <path data-id="subscript"
@@ -667,7 +667,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             </div>
             <!-- Increase Indent -->
             <div class="col" data-id="increaseIndent">
-                <button type="button" [csTooltip]="'Increase indent'" placement="bottom" delay="0" type="black"
+                <button type="button" [csTooltip]="'Increase indent'" placement="bottom" delay="0" 
                     [tooltipMandatory]="true" data-id="increaseIndent">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"
                         data-id="increaseIndent" viewBox="0 0 1024 1024">
@@ -681,7 +681,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             </div>
             <!-- Decrease Indent -->
             <div class="col" data-id="decreaseIndent">
-                <button type="button" [csTooltip]="'Decrease indent'" placement="bottom" delay="0" type="black"
+                <button type="button" [csTooltip]="'Decrease indent'" placement="bottom" delay="0" 
                     [tooltipMandatory]="true" data-id="decreaseIndent">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"
                         data-id="decreaseIndent" viewBox="0 0 1024 1024">

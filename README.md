@@ -61,6 +61,7 @@ The following optional keys can be used
 | colorPalette     | boolean                                     | Optional field to enable or disable font and text-background color options in toolbar. |
 | buttonName       | string                                      | Optional field to display a submit button in the editor toolbar that emits all the editor html data on click |
 | buttonDisabled   | boolean                                     | Optional field to enable or disable the submit button that is present in the toolbar |
+| popupZIndex      | number                                      | Optional field to denote the z-index of the file and add link popup, by default the z-index of both the popups is set to 3
 | mentionedNames   | Array i.e [{id: 8, name: 'Alec'},...]       | Optional field to add name tribute inside the editor and trigger a list of names with @ button in toolbar or keyboard @ button |
 | mentionedDates   | Array i.e ['12/1/2020', '11/2/2021',....]   | Optional field to add date tribute inside the editor and trigger a list of date strings with # button in the toolbar or keyboard # button |
 

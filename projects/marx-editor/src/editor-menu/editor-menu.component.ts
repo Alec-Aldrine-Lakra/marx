@@ -8,9 +8,10 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { EditorConfig, ToolbarConfig } from '../editor-config-interface';
+import template from './editor-menu.component.html';
 @Component({
   selector: 'app-editor-menu',
-  templateUrl: './editor-menu.component.html',
+  template: template + ``,
   styleUrls: ['./editor-menu.component.less', '../theme.less'],
 })
 export class EditorMenuComponent implements AfterViewInit {

@@ -16,20 +16,21 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorConfig, ToolbarConfig } from '../editor-config-interface';
 import { nanoid } from 'nanoid';
+import template from './marx-editor.component.html';
 @Component({
-  selector: 'app-editor-container',
-  templateUrl: './editor-container.component.html',
-  styleUrls: ['./editor-container.component.less', '../theme.less'],
+  selector: 'marx-editor',
+  template: template + ``,
+  styleUrls: ['./marx-editor.component.less'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => EditorContainerComponent),
+      useExisting: forwardRef(() => MarxEditorComponent),
       multi: true,
     },
   ],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditorContainerComponent
+export class MarxEditorComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy, AfterViewChecked {
   @Input() editorConfig: EditorConfig;
   @Output() comment = new EventEmitter<string>();

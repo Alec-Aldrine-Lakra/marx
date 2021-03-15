@@ -4,6 +4,9 @@
     flex-wrap    : wrap;
     border-radius: 2px;
     border       : 1px solid #f1f1f1;
+    * {
+        transition: all .2s ease-in-out;
+    }
 
     .editable-block {
         display      : block;
@@ -14,8 +17,6 @@
         border-radius: 2px 2px 0 0;
         border-bottom: transparent;
         width        : 100%;
-        max-height: 300px;
-        overflow: auto;
 
         &:hover,
         &:focus {
@@ -202,6 +203,35 @@
 
             &.active {
                 border-color: #1e5dd3;
+            }
+        }
+        &.collapsable {
+            min-height: 42px;
+            line-height: 22px;
+            padding: 10px;
+            border-bottom: 1px solid #F1F1F1;
+            &:hover, &:focus {
+                border-bottom-color: #1e5dd3;
+            }
+            &:focus {                
+                min-height: 100px;
+                &+.editor-tools {
+                    height: auto;
+                    padding: 5px;
+                }
+            }
+            &+.editor-tools {
+                height: 0;
+                overflow: hidden;
+                padding: 0;
+                box-shadow: none;
+            }
+            &.active {
+                min-height: 100px;
+                &+.editor-tools {
+                    height: auto;
+                    padding: 5px;
+                }
             }
         }
     }

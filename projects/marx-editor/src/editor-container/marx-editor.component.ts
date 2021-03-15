@@ -4,38 +4,38 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnChanges,
   forwardRef,
   SimpleChanges,
-  ViewChild,
-  ElementRef,
-  OnChanges,
   AfterViewInit,
   OnDestroy,
+  AfterViewChecked,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorConfig, ToolbarConfig } from '../editor-config-interface';
 import { nanoid } from 'nanoid';
-import template from './marx-editor.component.html';
 @Component({
-  selector: 'marx-editor',
-  template: template + ``,
-  styleUrls: [
-    './marx-editor.component.less'
-  ],
+  selector: 'app-editor-container',
+  templateUrl: './editor-container.component.html',
+  styleUrls: ['./editor-container.component.less', '../theme.less'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MarxEditorComponent),
+      useExisting: forwardRef(() => EditorContainerComponent),
       multi: true,
     },
   ],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-
+export class EditorContainerComponent
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy, AfterViewChecked {
   @Input() editorConfig: EditorConfig;
   @Output() comment = new EventEmitter<string>();
   @Output() sendSavedFiles = new EventEmitter<any>();//coming from menu to container from container to ap
-  @ViewChild('editorContainer') editorContainer!: ElementRef;
+  @ViewChild('editorContainer') editorContainer: ElementRef;
+  @Output() popup = new EventEmitter<boolean>();//coming from menu to container from container to ap
   imageToBeShown: any
   filesFromChild: any
   html: string;
@@ -54,13 +54,16 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   mentionedNames: { id: number; name: string }[];
   mentionedDates: string[];
   toolbarPlacement: 'top' | 'bottom';
-  oldRange: any;
+  oldRange: Range;
   savedLinks: any = []
   toolbarConfig: ToolbarConfig;
   fontColor: string;
   backgroundColor: string;
   clicked = false;
   moreOptionsButton: boolean;
+  isCollapsible: boolean;
+  menuLeftWidth: number = 600;
+  menuRightWidth: number;
 
   constructor() {
     this.fontColor = 'black';
@@ -78,7 +81,6 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   * @param event - Event which stores the files that are emitted from the file popup
   */
   saveFiles(event: any): void {
-    this.editorConfig.buttonName = 'Upload';
     this.sendSavedFiles.emit(event);
   }
 
@@ -89,37 +91,11 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
     const imgTag = document.createElement('img')
     imgTag.setAttribute('src', event.url);
     this.sel.removeAllRanges();
-    const range = this.oldRange.cloneRange();
+    const range: Range = this.oldRange.cloneRange();
     range.insertNode(imgTag);
     range.setStartAfter(imgTag);
     range.collapse();
     this.sel.addRange(range);
-  }
-
-  /**
-  * @param event - Event which stores the link emitted from the link popup
-  */
-  insertLink(event: any): void {
-    const anchorTag = document.createElement('a');
-    anchorTag.innerHTML = event.linkText;
-    anchorTag.setAttribute('href', event.linkUrl);
-    anchorTag.setAttribute('title', event.linkTitle);
-    anchorTag.setAttribute('target', '_blank');
-    anchorTag.setAttribute('rel', 'noopener noreferrer');
-
-    let range: any;
-    if(!this.oldRange) {
-      range = this.sel.getRangeAt(0).cloneRange();
-    } else {
-      range = this.oldRange.cloneRange();
-    }   
-    this.sel.removeAllRanges(); 
-    range.insertNode(anchorTag);
-    range.setStartAfter(anchorTag);
-    range.collapse();
-    this.sel.addRange(range);
-
-    this.writeValue(document.getElementById(`${this.id}`).innerHTML, 'editor');
   }
 
   resetToolbar(): void {
@@ -150,10 +126,11 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   writeValue(value: string, source?: string): void {
-    if(!source && document.getElementById(this.id)) {
-      document.getElementById(this.id).innerHTML = value ?? '';
+    if(document.getElementById(this.id) && !source) {
+        document.getElementById(this.id).innerHTML = value ?? '';
     }
     this.htmlVal = value;
+    
   }
 
   ngAfterViewChecked(): void {
@@ -178,14 +155,21 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
       this.selectionChange.bind(this),
       false
     );
-    if (this.editorContainer.nativeElement.offsetWidth < 600) {
+  }
+
+  getmenuWidth(event) {
+    this.menuLeftWidth = event.left;
+    this.menuRightWidth = event.right;
+    if (this.editorContainer.nativeElement.offsetWidth < this.menuLeftWidth + this.menuRightWidth) {
       this.moreOptionsButton = true;
+    } else {
+      this.moreOptionsButton = false;
     }
   }
+
   immageResize() {
     const imageWidth = document.getElementById('contentimage').offsetWidth;
     const imageHeight = document.getElementById('contentimage').offsetWidth;
-    console.log('Hi');
   }
 
   ngOnDestroy(): void {
@@ -248,6 +232,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
     }
   }
 
+
   getFontStyle(elem: any): string {
     if (elem) {
       if (elem?.nodeName === 'APP-TEXT-EDITOR') {
@@ -282,10 +267,12 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.editorConfig && this.editorConfig) {
       this.id = this.editorConfig?.id ?? this.id;
+
       this.mentionConfig = {
         mentions: []
       };
-      if (Array.isArray(this.editorConfig?.mentionedNames) && this.editorConfig?.mentionedNames.length > 0) {
+      console.log(this.editorConfig);
+      if (this.editorConfig?.mentionedNames && Array.isArray(this.editorConfig?.mentionedNames) && this.editorConfig?.mentionedNames.length > 0) {
         this.editorConfig.mentionedNames = this.editorConfig?.mentionedNames.filter((item: { id: number; name: string }) => {
             if (item.id !== 0 && item.name.trim() !== '') {
               return item;
@@ -306,7 +293,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
           dropUp: true,
         });
       }
-      if ( Array.isArray(this.editorConfig?.mentionedDates) && this.editorConfig?.mentionedDates.length > 0) {
+      if (this.editorConfig?.mentionedDates && Array.isArray(this.editorConfig?.mentionedDates) && this.editorConfig?.mentionedDates.length > 0) {
         this.editorConfig.mentionedDates = [
           ...new Set(this.editorConfig?.mentionedDates),
         ];
@@ -359,6 +346,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
    */
   blur(): void {
     this.oldRange = this.sel.getRangeAt(0).cloneRange(); // to store the range when element is blurred
+    this.isCollapsible = false;
   }
 
   /**
@@ -368,6 +356,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
     if (document.getElementById(`${this.id}`)) {
       document.getElementById(`${this.id}`).focus();
     }
+    this.isCollapsible = true;
   }
 
   /**
@@ -392,7 +381,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
       this.format = false;
       this.endOffset = this.sel.getRangeAt(0).endOffset;
 
-      const range = document.createRange();
+      const range: Range = document.createRange();
       range.setStart(this.node, this.startOffset - 1);
       range.setEnd(this.node, this.endOffset);
       range.deleteContents(); // deleting previous set contents
@@ -413,7 +402,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   */
   mentionClosed(): void {
 
-    if (this.tribute !== '') {
+    if (this.tribute && this.tribute !== '') {
       const input = document.createElement('input');
       input.setAttribute('value', `${this.tribute}`);
       input.setAttribute('type', 'button');
@@ -427,7 +416,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
       input.style.color = '#4681ef';
       input.style.fontWeight = 'inherit';
       input.style.fontSize = 'inherit';
-      const range = this.sel.getRangeAt(0).cloneRange();
+      const range: Range = this.sel.getRangeAt(0).cloneRange();
       this.sel.removeAllRanges();
       const sp = document.createTextNode(' ');
       range.insertNode(input);
@@ -529,7 +518,7 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
           if (this.oldRange.collapsed) {
 
             this.sel.removeAllRanges();
-            const range = this.oldRange.cloneRange();
+            const range: Range = this.oldRange.cloneRange();
             const t = document.createTextNode('');
             range.insertNode(t);
             range.setStartAfter(t);
@@ -570,14 +559,13 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
       case 'para': document.execCommand('formatBlock', false, 'p');
         break;
       case 'superscript': this.insertSupTag();
-        break;
+                           break;
       case 'subscript': this.insertSubTag();
-        break;
+                        break;
       case 'link': this.insertLink(value);
                    break;
-      case 'bold':
-        document.execCommand('bold', false, '');
-        break;
+      case 'bold': document.execCommand('bold', false, '');
+                   break;
       case 'italic':
         document.execCommand('italic', false, '');
         break;
@@ -689,10 +677,10 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
     if (!this.toolbarConfig.quote) {
       const blockquote = document.createElement('blockquote');
       blockquote.setAttribute('style', 'box-sizing: border-box; padding-left:16px; padding-bottom: 10px; border-left: 2px solid rgb(223, 225, 230); margin: 1.143rem 5px 0px');
-      blockquote.innerHTML = '&#8204;';
+      // blockquote.innerHTML = '&#8204;';
       const div = document.createElement('div');
       div.appendChild(document.createElement('br'));
-      const range = this.sel.getRangeAt(0);
+      const range: Range = this.sel.getRangeAt(0);
       range.insertNode(div);
       range.insertNode(blockquote);
       range.setStart(blockquote, 0);
@@ -707,36 +695,91 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
    * Function inserts sup tag inside the editor
    */
   insertSupTag(): void {
+    let flag = 0;
+    if (this.toolbarConfig.subscript) {
+      this.reachTextNode('sub');
+      flag = 1;
+    }
     if (!this.toolbarConfig.superscript) {
       const sup = document.createElement('sup');
-      sup.innerHTML = '&#8204;';
-      const range = this.sel.getRangeAt(0);
+      sup.innerHTML = this.sel.toString() || '&#8204;';
+      let range: Range;
+      if(flag) {
+        range = this.sel.getRangeAt(0).cloneRange();
+      } else {
+        range = this.oldRange.cloneRange() ?? this.sel.getRangeAt(0).cloneRange();
+      }
+      range.deleteContents();
       range.insertNode(sup);
       range.setStart(sup, 1);
       range.setEnd(sup, 1);
       range.collapse();
+      this.sel.removeAllRanges();
+      this.sel.addRange(range);
     } else {
       this.reachTextNode('sup');
     }
   }
-  
+
   /**
    * Function inserts sub tag inside the editor
    */
   insertSubTag(): void {
+    let flag = 0;
+    if (this.toolbarConfig.superscript) {
+      this.reachTextNode('sup');
+      flag = 1;
+    }
     if (!this.toolbarConfig.subscript) {
       const sub = document.createElement('sub');
-      sub.innerHTML = '&#8204;';
-      const range = this.sel.getRangeAt(0);
+      sub.innerHTML = this.sel.toString() || '&#8204;';
+      let range: Range;
+      if(flag) {
+        range = this.sel.getRangeAt(0).cloneRange();
+      } else {
+        range = this.oldRange.cloneRange() ?? this.sel.getRangeAt(0).cloneRange();
+      }
+      range.deleteContents();
       range.insertNode(sub);
       range.setStart(sub, 1);
       range.setEnd(sub, 1);
       range.collapse();
+      this.sel.removeAllRanges();
+      this.sel.addRange(range);
     } else {
       this.reachTextNode('sub');
     }
   }
-  
+
+  /**
+  * @param event - Event which stores the link emitted from the link popup
+  */
+  insertLink(event: any): void {
+    const anchorTag = document.createElement('a');
+    anchorTag.innerHTML = event.linkText;
+    anchorTag.setAttribute('href', event.linkUrl);
+    anchorTag.setAttribute('title', event.linkTitle);
+    anchorTag.setAttribute('target', '_blank');
+    anchorTag.setAttribute('rel', 'noopener noreferrer');
+
+
+    const textNode: Node = document.createTextNode('');
+
+    let range: Range;
+    if(!this.oldRange) {
+      range = this.sel.getRangeAt(0).cloneRange();
+    } else {
+      range = this.oldRange.cloneRange();
+    }   
+    this.sel.removeAllRanges(); 
+    range.insertNode(anchorTag);
+    range.insertNode(textNode);
+    range.setStartAfter(textNode);
+    range.collapse();
+    this.sel.addRange(range);
+    this.writeValue(document.getElementById(`${this.id}`).innerHTML, 'editor');
+  }
+
   reachTextNode(tagName: string): void {
     const parent = this.getParent(this.sel.anchorNode, tagName);
     const space = document.createElement('text');
@@ -749,7 +792,6 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
     this.sel.getRangeAt(0).insertNode(space);
     this.sel.getRangeAt(0).setStartAfter(space);
   }
-
 
   /**
    * 
@@ -809,5 +851,4 @@ export class MarxEditorComponent implements OnInit, OnChanges, AfterViewInit, On
   clickedOnImage() {
     this.clicked = true;
   }
-
 }

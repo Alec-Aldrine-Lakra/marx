@@ -1,6 +1,6 @@
 {
   "name": "marx-editor",
-  "version": "1.0.61",
+  "version": "1.0.62",
   "peerDependencies": {
     "@angular/common": "~11.2.3",
     "@angular/core": "~11.2.3"

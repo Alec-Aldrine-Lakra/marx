@@ -491,13 +491,13 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                     </div>
                     <div class="link">
                         <label>{{editorConfig?.urlValue ? editorConfig?.urlValue : 'URL'}}</label>
-                        <input [(ngModel)]="linkUrl" type="text" placeholder="{{editorConfig?.urlInputPlaceHolder ? editorConfig?.urlInputPlaceHolder : 'Enter a URL (Example: https://example.com)'}}">
-                        <p class="error" *ngIf="invalidUrlMessage">{{editorConfig?.validUrlMsg ? editorConfig?.validUrlMsg : 'Please provide a valid URL.'}}</p>
+                        <input [(ngModel)]="linkUrl" type="text" placeholder="{{editorConfig?.urlPlaceHolder ? editorConfig?.urlInputPlaceHolder : 'Enter a URL (Example: https://example.com)'}}">
+                        <p class="error" *ngIf="invalidUrlMessage">{{editorConfig?.validUrlMessage ? editorConfig?.validUrlMsg : 'Please provide a valid URL.'}}</p>
                     </div>
 
                     <div class="link">
                         <label>{{editorConfig?.urlText ? editorConfig?.urlText : 'Display Text'}}</label>
-                        <input [(ngModel)]="linkText" type="text" placeholder="{{editorConfig?.textInputPlaceHolder ? editorConfig?.textInputPlaceHolder : 'Enter a display text'}}">
+                        <input [(ngModel)]="linkText" type="text" placeholder="{{editorConfig?.textPlaceHolder ? editorConfig?.textInputPlaceHolder : 'Enter a display text'}}">
                     </div>
                     <div class="link">
                         <label>{{editorConfig?.urlTitle ? editorConfig?.urlTitle : 'Title'}}</label>

@@ -2,7 +2,7 @@ const template = `<div class="editor-container" (blur)="blur()" #editorContainer
                         <div class="editable-block" contenteditable="true"
                             [class.bottom]="!editorConfig?.toolbarPlacement || editorConfig?.toolbarPlacement === 'bottom'"
                             [class.top]="editorConfig?.toolbarPlacement === 'top'" [id]="id" (input)="setValue($event.target.innerText)"
-                            (paste)="onPaste($event)" [mentionConfig]="mentionConfig" (closed)="mentionClosed()"
+                            (paste)="onPaste($event)" [mentionConfig]="mentionConfig" (closed)="mentionClosed()" (blur)="blurContentEditable()"
                             [attr.placeholder]="editorConfig?.placeholder" [class.collapsible]="editorConfig?.isCollapsible" [class.active]="isCollapsible">
                         </div>
                         <div class="editor-tools"

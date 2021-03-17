@@ -9,7 +9,6 @@ import {
   SimpleChanges,
   AfterViewInit,
   OnDestroy,
-  AfterViewChecked,
   ViewChild,
   ElementRef,
 } from '@angular/core';
@@ -31,7 +30,7 @@ import template from './marx-editor.component.html';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarxEditorComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy, AfterViewChecked {
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() editorConfig: EditorConfig;
   @Output() comment = new EventEmitter<string>();
   @Output() sendSavedFiles = new EventEmitter<any>();//coming from menu to container from container to ap
@@ -131,11 +130,6 @@ export class MarxEditorComponent
         document.getElementById(this.id).innerHTML = value ?? '';
     }
     this.htmlVal = value;
-    
-  }
-
-  ngAfterViewChecked(): void {
-    // console.log('Change detection triggered!');
   }
 
   registerOnChange(fn: any): void {
@@ -185,7 +179,7 @@ export class MarxEditorComponent
   * @param event - Event fired whenever there is a selection change
   */
   selectionChange(event: any): void {
-    if (document.activeElement === document.getElementById(this.id)) {
+    if (event.target?.activeElement?.id === this.id) {
       this.oldRange = this.sel.getRangeAt(0).cloneRange();
       this.setFontAndbackgroundColor();
       this.toolbarConfig = {
@@ -346,8 +340,15 @@ export class MarxEditorComponent
    * When editor is blurred
    */
   blur(): void {
-    this.oldRange = this.sel.getRangeAt(0).cloneRange(); // to store the range when element is blurred
+    // this.oldRange = this.sel.getRangeAt(0).cloneRange(); // to store the range when element is blurred
     this.isCollapsible = false;
+  }
+
+  /**
+  * When contenteditable is blurred
+  */
+  blurContentEditable(): void {
+    this.oldRange = this.sel.getRangeAt(0).cloneRange(); // to store the range when element is blurred
   }
 
   /**
@@ -654,15 +655,26 @@ export class MarxEditorComponent
    * @param size - Represents the size of the font 
    */
   setFontSize(size: string): void {
-    size = size.slice(size.lastIndexOf('-') + 1) + 'px';
-    const container = document.createElement('span');
-    container.setAttribute('style', `font-size: ${size};`);
-    if(!this.oldRange.collapsed) {
-      container.appendChild(this.oldRange.cloneContents());
-      const html = `<span style="font-size: ${size};">${container.innerHTML}</span>`;
-      document.execCommand('insertHTML', false, html);
+    // size = size.slice(size.lastIndexOf('-') + 1) + 'px';
+    // const container = document.createElement('span');
+    // container.setAttribute('style', `font-size: ${size};`);
+    // if(!this.oldRange.collapsed) {
+    //   container.appendChild(this.oldRange.cloneContents());
+    //   const html = `<span style="font-size: ${size};">${container.innerHTML}</span>`;
+    //   document.execCommand('insertHTML', false, html);
+    // } else {
+    //   container.setAttribute('style', `font-size: ${size};`);
+    //   container.innerHTML = '&#8204;';
+    //   this.oldRange.insertNode(container);
+    //   this.oldRange.setStart(container, 1);
+    //   this.oldRange.setEnd(container, 1);
+    //   this.oldRange.collapse();
+    // }
+    if(this.sel.toString().length > 0) {
+      document.execCommand("fontSize", false, size);
     } else {
-      container.setAttribute('style', `font-size: ${size};`);
+      const container = document.createElement('font');
+      container.setAttribute('size', size);
       container.innerHTML = '&#8204;';
       this.oldRange.insertNode(container);
       this.oldRange.setStart(container, 1);
@@ -693,8 +705,8 @@ export class MarxEditorComponent
   }
 
   /**
-   * Function inserts sup tag inside the editor
-   */
+  * Function inserts sup tag inside the editor
+  */
   insertSupTag(): void {
     let flag = 0;
     if (this.toolbarConfig.subscript) {
@@ -723,8 +735,8 @@ export class MarxEditorComponent
   }
 
   /**
-   * Function inserts sub tag inside the editor
-   */
+  * Function inserts sub tag inside the editor
+  */
   insertSubTag(): void {
     let flag = 0;
     if (this.toolbarConfig.superscript) {

@@ -54,6 +54,15 @@ The following optional keys can be used
 | Option           | Type                                        | Description 
 | ---              | ---                                         | ---        
 | mode             | 'basic' or 'prime'                          | Optional field that specifies the mode of the editor you want to use, by default the editor runs in basic mode
+| link             | boolean                                     | Optional field to enable or disable adding link in the editor
+| urlValue         | string                                      | Optional field that acts as a label for url value in Add Link popup
+| urlText          | string                                      | Optional field that acts as a label for url value in Add Link popup
+| urlTitle         | string                                      | Optional field that acts as a label for url value in Add Link popup
+| validUrlMessage  | string                                      | Optional field that displays error message for invalid url value in Add Link popup
+| urlPlaceHolder   | string                                      | Optional field that acts as a placeholder for url value in Add Link popup
+| textPlaceholder  | string                                      | Optional field that acts as a placeholder for url text in Add Link popup
+| titlePlaceholder | string                                      | Optional field that acts as a placeholder for url title in Add Link popup
+| configFontStyle  | boolean                                     | Optional field that enables or disables font-style option in editor i.e H1, H2, H3 & P tags
 | file             | boolean                                     | Optional field to enable or disable file upload option inside the editor. |
 | id               | string                                      | Optional field to add a unique id for each instance of editor, by default each instance of editor created has a unique id |
 | placeholder      | string                                      | Optional field to display a message when editor is empty. |

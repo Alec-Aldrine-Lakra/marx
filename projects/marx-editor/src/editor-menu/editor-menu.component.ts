@@ -305,28 +305,22 @@ export class EditorMenuComponent implements AfterViewInit {
    * Function is invoked when the user clicks on the save button from the add link popover
   */
   saveLink(): void { 
-    console.log("Link Data",this.linkText,this.linkTitle,this.linkUrl)
     const rex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     if(!this.linkUrl || !this.linkUrl?.match(rex)) { //check url is valid or not
         this.invalidUrlMessage = true
     }
     else {  
-      if(this.linkText===undefined || this.linkText==='')
-      {
-        console.log("TEXT UNDEFINED")
-        this.linkText=this.linkUrl
+      if(!this.linkText) {
+        this.linkText = this.linkUrl;
       }
       const obj = {        
             value: {
               linkUrl:this.linkUrl,
-              linkText:this.linkText?.trim() ?? '',
+              linkText:this.linkText?.trim() ?? this.linkUrl,
               linkTitle:this.linkTitle?.trim() ?? ''
             },
             id: 'link'
       };
-      // if (this.linkText === undefined || this.linkText === '') {
-      //   alert('Hi');
-      // }
       this.linkInEditor.emit(obj);
       this.closeAddLinksPopover();
     }

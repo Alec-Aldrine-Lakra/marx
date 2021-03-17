@@ -338,7 +338,9 @@
         cursor       : pointer;
         border       : none;
         background   : #FFFFFF;
-
+        &.large {
+            padding: 0 4px;
+        }
         &.lg {
             svg {
                 transform: scale(1.4);
@@ -365,8 +367,9 @@
         svg {
             height: 26px;
             width : 26px;
-            fill  : #5a5a5a;
-            stroke: #5a5a5a;
+            fill  : #161b2f;
+            stroke: #161b2f;
+            pointer-events: none;
         }
 
         &:focus {

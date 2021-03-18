@@ -1,4 +1,4 @@
-.editor-container {
+::ng-deep .editor-container {
     position     : relative;
     display      : flex;
     flex-wrap    : wrap;
@@ -12,21 +12,24 @@
         display      : block;
         outline      : none;
         min-height   : 150px;
-        padding      : 25px;
-        border       : 1px solid #f1f1f1;
+        padding      : 15px;
+        border       : none;
         border-radius: 2px 2px 0 0;
         border-bottom: transparent;
         width        : 100%;
+        overflow: auto;
+        span {
+            display: inline-block;
+        }
 
         &:hover,
         &:focus {
-            // box-shadow: 0 0 0 0;
             outline     : none;
-            border-color: #1e5dd3;
-            box-shadow  : 0 0 5px rgba(30, 93, 211, 0.27);
+            // box-shadow  : 0 0 5px rgba(30, 93, 211, 0.27);
 
             &+.editor-tools {
-                box-shadow: 0 0 5px rgba(30, 93, 211, 0.27);
+                // box-shadow: 0 0 5px rgba(30, 93, 211, 0.27);
+                border-top-color: #1e5dd3;
             }
         }
 
@@ -244,6 +247,7 @@
         border-radius: 2px;
         width        : 100%;
         padding      : 5px;
+        position: sticky;
 
         app-editor-menu {
             display: block;
@@ -254,11 +258,16 @@
             order: 1;
             border-top: none;
             border-bottom: 1px solid #F1F1F1;
+            top: 0;
         }
 
         &.bottom {
             order: 2;
+            bottom: 0;
         }
+    }
+    &:focus-within, &:hover {
+        border-color: #1e5dd3;
     }
 }
 

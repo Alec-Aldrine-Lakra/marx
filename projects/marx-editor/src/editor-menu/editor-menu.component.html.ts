@@ -163,7 +163,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 </svg>
             </button>
             <div class="popover-overlay" *ngIf="fontStyle" (click)="fontStyle = false"></div>
-            <div class="popover small" *ngIf="fontStyle">
+            <div class="popover small" *ngIf="fontStyle"  (click)="fontStyle = false">
                 <ul class="option-list">
                     <li data-id="h1">
                         <button data-id="h1">
@@ -215,7 +215,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             <div class="popover-overlay" *ngIf="fontSize" (click)="fontSize = false"></div>
             <div class="popover small" *ngIf="fontSize">
                 <ul class="option-list">
-                    <li *ngFor="let size of [11,12,14,18,24,32,36,48]" attr.data-id="fontsize-{{size}}"
+                    <li *ngFor="let size of [12,14,18,24,32,36,48]" attr.data-id="fontsize-{{size}}"
                         (click)="fontSize = false;">
                         <button attr.data-id="fontsize-{{size}}">{{size}}</button>
                     </li>
@@ -247,7 +247,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         <!-- Color -->
         <div class="col" clickOutside (clickOutside)="color = false;"
             *ngIf="editorConfig?.colorPalette && editorConfig?.mode === 'prime'">
-            <button (click)="color = !color; fillColor[0] = true" [class.active]="color" [csTooltip]="'Color'" placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
+            <button (click)="openColorTab()" [class.active]="color" [csTooltip]="'Color'" placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                     <path d="M0 932h1024v92h-1024v-92zM383.4 916.4c0 0 0 0 0 0 8.8 8.8 20.2 13.6 32.6 13.6 12.2 0 23.8-4.8 32.4-13.6l384-384c8.6-8.6 13.4-20.2 13.4-32.4s-4.8-23.8-13.4-32.4l-466.8-467.6-65 65.4 114.4 114.4-351.4 351.6c-18 18-18 47 0 65l319.8 320zM689 545.8l-273 273-255-255 18-18h510zM689 453.8h-418l209-209 209 209zM842.2 593c-27 39-72.2 111-72.2 154.2 0 60.6 49.4 110 110 110s110-49.4 110-110c0-40.4-39.2-106-72-154.2-8.2-12-22.4-19.2-37.8-19.2-15.6 0.2-29.6 7.4-38 19.2zM880 765.2c-9.8 0-17.8-8-18-17.8 0.4-4 5.6-17.8 18-40.6 12.4 23 17.6 36.6 18 40.6-0.2 9.8-8.2 17.8-18 17.8z"></path>
                 </svg>
@@ -273,11 +273,11 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                     </div>
                     <div class="tab-body">
                         <app-color-palette [(color)]="toolbarConfig.backgroundColor"
-                            (colorChange)="colorChange('fillColor'); color = false" *ngIf="fillColor[0]">
+                            (colorChange)="colorChange('fillColor')" *ngIf="fillColor[0]">
                         </app-color-palette>
 
                         <app-color-palette [(color)]="toolbarConfig.fontColor"
-                            (colorChange)="colorChange('textColor'); color = false" *ngIf="fillColor[1]">
+                            (colorChange)="colorChange('textColor')" *ngIf="fillColor[1]">
                         </app-color-palette>
                     </div>
                 </div>
@@ -501,7 +501,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
             <div class="popover small" *ngIf="moreOptions">
                 <ul class="option-list">
                     <!-- Quote -->
-                    <li (click)="moreOptions = false;" data-id="quote">
+                    <li (click)="moreOptions = false;" data-id="quote" *ngIf="false">
                         <button data-id="quote" [class.active]="toolbarConfig?.quote">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                                 <path d="M430 438.4h-332.6c22.2-131 135.2-228 268.6-228h46v-92h-46c-201.8 0-366 164.2-366 366v384c0 25.4 20.6 46 46 46h384c25.4 0 46-20.6 46-46v-384c0-25.4-20.6-46-46-46zM384 530.4v292h-292v-292h292zM978 438.4h-332.6c22.2-131 135.2-228 268.6-228h46v-92h-46c-201.8 0-366 164.2-366 366v384c0 25.4 20.6 46 46 46h384c25.4 0 46-20.6 46-46v-384c0-25.4-20.6-46-46-46zM932 530.4v292h-292v-292h292z"></path>
@@ -510,7 +510,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                         </button>
                     </li>
                     <!-- Superscript -->
-                    <li (click)="moreOptions = false;" data-id="superscript">
+                    <li (click)="moreOptions = false;" data-id="superscript" *ngIf="false">
                         <button [class.active]="toolbarConfig?.superscript" data-id="superscript">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                         <path d="M576 114l-223.4 367.8-240.2-367.8h-112.4l296.6 448-296.6 462h112.4l240.4-381.8 223.2 381.8h112.4l-279.6-462 279.6-448zM965.4 283.8v0c37.2-37.4 58.6-89 58.6-141.8 0-78.2-63.8-142-142-142s-142 63.8-142 142v46h92v-46c0-27.6 22.4-50 50-50s50 22.4 50 50c0 28.6-11.6 56.6-31.8 76.6l-160.2 160.4v97h284v-92h-159l100.4-100.2z"></path>
@@ -519,7 +519,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                         </button>
                     </li>
                     <!-- Subscript -->
-                    <li (click)="moreOptions = false" data-id="subscript">
+                    <li (click)="moreOptions = false" data-id="subscript" *ngIf="false">
                         <button [class.active]="toolbarConfig?.subscript" data-id="subscript">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                         <path d="M576 0l-223.4 367.8-240.2-367.8h-112.4l296.6 448-296.6 462h112.4l240.4-381.8 223.2 381.8h112.4l-279.6-462 279.6-448zM965.4 831.8v0c37.4-37.4 58.6-89 58.6-141.8 0-78.2-63.8-142-142-142s-142 63.8-142 142v46h92v-46c0-27.6 22.4-50 50-50s50 22.4 50 50c0 28.6-11.6 56.6-31.8 76.6l-160.2 160.4v97h284v-92h-159l100.4-100.2z"></path>
@@ -552,7 +552,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
 
         <div class="child-row" *ngIf="!moreOptionsButton">
             <!-- Quote -->
-            <div class="col" data-id="quote">
+            <div class="col" data-id="quote" *ngIf="false">
                 <button data-id="quote" [csTooltip]="'Quote'" placement="bottom" delay="0" type="button"
                     [class.active]="toolbarConfig?.quote" [tooltipMandatory]="true">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
@@ -561,7 +561,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 </button>
             </div>
             <!-- Superscript -->
-            <div class="col" data-id="superscript">
+            <div class="col" data-id="superscript" *ngIf="false">
                 <button [class.active]="toolbarConfig?.superscript" data-id="superscript" [csTooltip]="'Superscript'"
                     placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
@@ -570,7 +570,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 </button>
             </div>
             <!-- Subscript -->
-            <div class="col" data-id="subscript">
+            <div class="col" data-id="subscript" *ngIf="false">
                 <button [class.active]="toolbarConfig?.subscript" data-id="subscript" [csTooltip]="'Subscript'"
                     placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">

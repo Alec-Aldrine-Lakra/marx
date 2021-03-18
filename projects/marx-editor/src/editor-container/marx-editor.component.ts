@@ -152,10 +152,10 @@ export class MarxEditorComponent
     );
   }
 
-  getmenuWidth(event) {
-    this.menuLeftWidth = event.left;
-    this.menuRightWidth = event.right;
-    if (this.editorContainer.nativeElement.offsetWidth < this.menuLeftWidth + this.menuRightWidth) {
+  getMenuWidth({left, right}) {
+    this.menuLeftWidth = left;
+    this.menuRightWidth = right;
+    if (this.editorContainer.nativeElement.offsetWidth < (this.menuLeftWidth + this.menuRightWidth)) {
       this.moreOptionsButton = true;
     } else {
       this.moreOptionsButton = false;
@@ -368,16 +368,13 @@ export class MarxEditorComponent
     this.innerText = innerText;
 
     if (this.innerText === '') {
-      document.execCommand('removeFormat', false, ''); // remove previous format once the editor is clear
-      this.toolbarConfig.fontColor = 'black';
-      this.toolbarConfig.backgroundColor = 'white';
-      this.toolbarOperations('textColor', 'black');
-      this.toolbarOperations('fillColor', 'white');
+      // document.execCommand('removeFormat', false, ''); // remove previous format once the editor is clear
+      // this.toolbarConfig.fontColor = 'black';
+      // this.toolbarConfig.backgroundColor = 'white';
+      // this.toolbarOperations('textColor', 'black');
+      // this.toolbarOperations('fillColor', 'white');
     }
-    this.lastChar = this.getPrecedingCharacter(
-      window.getSelection().anchorNode
-
-    ); // gets the last input character
+    this.lastChar = this.getPrecedingCharacter(this.sel?.anchorNode); // gets the last input character
 
     if (this.format && this.startOffset && this.tribute) {
       this.format = false;
@@ -607,16 +604,10 @@ export class MarxEditorComponent
       case 'fillColor':
         document.execCommand('styleWithCSS', false, '');
         document.execCommand('hiliteColor', false, value);
-        if (!this.sel.getRangeAt(0).collapsed) {
-          this.sel.getRangeAt(0).collapse();
-        }
         break;
       case 'textColor':
         document.execCommand('styleWithCSS', false, '');
         document.execCommand('foreColor', false, value);
-        if (!this.sel.getRangeAt(0).collapsed) {
-          this.sel.getRangeAt(0).collapse();
-        }
         break;
       case '@': this.insertTribute('@');
         break;
@@ -635,18 +626,30 @@ export class MarxEditorComponent
       case 'font-courier new': document.execCommand('fontName', false, 'courier');
         break;
       case 'font-tahoma': document.execCommand('fontName', false, 'tahoma');
-        break; //8,9,10,11,12,14,18,24,32,36,48
+        break;
       case 'fontsize-arial': document.execCommand('fontName', false, 'arial');
         break;
-      case 'fontsize-11':      
-      case 'fontsize-12': 
-      case 'fontsize-14':       
-      case 'fontsize-18': 
-      case 'fontsize-24': 
-      case 'fontsize-32': 
-      case 'fontsize-36': 
-      case 'fontsize-48':  this.setFontSize(id);
-                           break;
+      case '12':
+        this.setFontSize('1');   
+        break;   
+      case '14': 
+        this.setFontSize('2');
+        break;
+      case '18':    
+        this.setFontSize('3');  
+        break; 
+      case '24': 
+        this.setFontSize('4');
+        break;
+      case '32': 
+        this.setFontSize('5');
+        break;
+      case '36': 
+        this.setFontSize('6');
+        break;
+      case '48': 
+        this.setFontSize('7');
+        break;
     }
   }
 
@@ -655,32 +658,7 @@ export class MarxEditorComponent
    * @param size - Represents the size of the font 
    */
   setFontSize(size: string): void {
-    // size = size.slice(size.lastIndexOf('-') + 1) + 'px';
-    // const container = document.createElement('span');
-    // container.setAttribute('style', `font-size: ${size};`);
-    // if(!this.oldRange.collapsed) {
-    //   container.appendChild(this.oldRange.cloneContents());
-    //   const html = `<span style="font-size: ${size};">${container.innerHTML}</span>`;
-    //   document.execCommand('insertHTML', false, html);
-    // } else {
-    //   container.setAttribute('style', `font-size: ${size};`);
-    //   container.innerHTML = '&#8204;';
-    //   this.oldRange.insertNode(container);
-    //   this.oldRange.setStart(container, 1);
-    //   this.oldRange.setEnd(container, 1);
-    //   this.oldRange.collapse();
-    // }
-    if(this.sel.toString().length > 0) {
-      document.execCommand("fontSize", false, size);
-    } else {
-      const container = document.createElement('font');
-      container.setAttribute('size', size);
-      container.innerHTML = '&#8204;';
-      this.oldRange.insertNode(container);
-      this.oldRange.setStart(container, 1);
-      this.oldRange.setEnd(container, 1);
-      this.oldRange.collapse();
-    }
+    document.execCommand("fontSize", false, size);
   }
 
   /**
@@ -851,7 +829,7 @@ export class MarxEditorComponent
         const a = document.createTextNode(`${char}`);
         this.oldRange.insertNode(a);
         this.oldRange.setStartAfter(a);
-        this.setValue(document.getElementById(this.id).innerText);
+        this.setValue(document.getElementById(this.id).innerHTML);
       } else {
         this.focus();
         this.oldRange = this.sel.getRangeAt(0).cloneRange();

@@ -69,19 +69,14 @@ export class EditorMenuComponent implements AfterViewInit {
     this.fillColor = Array(2).fill(false);
     this.image = null;
     this.fontType = ['verdana', 'arial', 'georgia', 'impact', 'courier new', 'tahoma']
-    // console.log("FILL ARRAY",this.fillColor)
   }
+
   ngAfterViewInit() {
-    setTimeout(() => {
-      const leftMenu = this.menuLeft?.nativeElement?.offsetWidth;
-      // console.log(leftMenu);
-      // this.menuLeftWidth.emit(leftMenu);
-      const rightMenu = this.menuRight?.nativeElement?.offsetWidth;
-      // console.log(rightMenu);
-      // this.menuRightWidth.emit(rightMenu);
-      this.setWidth.emit({left:leftMenu,right:rightMenu})
-    }, 90);
+    const left: number = this.menuLeft?.nativeElement?.offsetWidth;
+    const right: number = this.menuRight?.nativeElement?.offsetWidth;
+    this.setWidth.emit({left,right});
   }
+
   /**
    * 
    * @param event - Event triggered when the toolbar button is clicked
@@ -103,6 +98,18 @@ export class EditorMenuComponent implements AfterViewInit {
       id: type,
       value: type === 'textColor' ? this.toolbarConfig?.fontColor : this.toolbarConfig?.backgroundColor
     });
+    this.color = false;
+  }
+
+  
+  /**
+   * Opens the color tab
+   */
+   openColorTab(): void {
+    this.color = !this.color;
+    if(this.fillColor.every(item => item === false)) {
+      this.fillColor[0] = true;
+    }
   }
 
   /**

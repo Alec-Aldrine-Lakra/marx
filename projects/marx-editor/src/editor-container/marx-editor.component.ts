@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
@@ -30,7 +29,7 @@ import template from './marx-editor.component.html';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarxEditorComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  implements OnChanges, AfterViewInit, OnDestroy {
   @Input() editorConfig: EditorConfig;
   @Output() comment = new EventEmitter<string>();
   @Output() sendSavedFiles = new EventEmitter<any>();//coming from menu to container from container to ap
@@ -140,11 +139,8 @@ export class MarxEditorComponent
     this.onTouch = fn;
   }
 
-  ngOnInit(): void {
-    this.sel = window.getSelection();
-  }
-
   ngAfterViewInit(): void {
+    this.sel = window.getSelection();
     document.addEventListener(
       'selectionchange',
       this.selectionChange.bind(this),

@@ -73,7 +73,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                                     d="M270 480.6h754v101.2h-754v-101.2zM270 812h754v101.2h-754v-101.2zM270 126.8h754v101.2h-754v-101.2zM65.4 280h65v-216h-90.2v61.2h25.2zM81.6 488.8c0.2-18.4 9.4-18.4 13-18.4 11.2 0 11.2 7.6 11.2 14.2 0 24.4-34.8 53.4-68.4 81.6-4.6 3.8-9.2 7.8-13.8 11.6l-5 4.2v47.2h155.4v-58h-53c25-23.4 48.8-52.8 48.8-89 0-43-29.4-70.8-74.8-70.8-45.2 0-75.2 30-76.6 76.6l-0.4 14.4h63.4l0.2-13.6zM154.6 861.6c9.6-10 16.6-24.2 16.6-42.2 0-31.8-22.6-63.8-73.4-63.8-45.2 0-74.4 25.8-76.6 67.2l-0.8 14.8h44v53.8h-46.4l0.6 14.6c1.8 44 32.8 71.4 80.8 71.4 45 0 75.2-27 75.2-67.4 0-20.4-7-37.2-20-48.4zM85.8 834.4h-2.6l1-9.2c1.2-9.6 7-10.8 12.4-10.8 11.6 0 11.6 5.2 11.6 9.4 0.2 3.8 0.2 10.6-22.4 10.6zM85.8 892c26.2 0 26.2 7.2 26.2 14.8 0 8.4-4.2 12.4-13.4 12.4-11 0-16.6-4.8-17-14.4l-0.6-12.8h4.8z">
                                 </path>
                             </svg>
-                            <span data-id="orderedList">List with number</span>
+                            <span data-id="orderedList">Numbered List</span>
                         </button>
                     </li>
                     <li data-id="unorderedList">
@@ -85,7 +85,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                                     d="M270 480.6h754v101.2h-754v-101.2zM270 812h754v101.2h-754v-101.2zM270 126.8h754v101.2h-754v-101.2zM36 126.8h101.2v101.2h-101.2v-101.2zM36 480.6h101.2v101.2h-101.2v-101.2zM36 812h101.2v101.2h-101.2v-101.2z">
                                 </path>
                             </svg>
-                            <span data-id="unorderedList">List with bullets</span>
+                            <span data-id="unorderedList">Bulleted List</span>
                         </button>
                     </li>
                 </ul>
@@ -510,7 +510,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                         </button>
                     </li>
                     <!-- Superscript -->
-                    <li (click)="moreOptions = false;" data-id="superscript" *ngIf="false">
+                    <li (click)="moreOptions = false;" data-id="superscript">
                         <button [class.active]="toolbarConfig?.superscript" data-id="superscript">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                         <path d="M576 114l-223.4 367.8-240.2-367.8h-112.4l296.6 448-296.6 462h112.4l240.4-381.8 223.2 381.8h112.4l-279.6-462 279.6-448zM965.4 283.8v0c37.2-37.4 58.6-89 58.6-141.8 0-78.2-63.8-142-142-142s-142 63.8-142 142v46h92v-46c0-27.6 22.4-50 50-50s50 22.4 50 50c0 28.6-11.6 56.6-31.8 76.6l-160.2 160.4v97h284v-92h-159l100.4-100.2z"></path>
@@ -519,7 +519,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                         </button>
                     </li>
                     <!-- Subscript -->
-                    <li (click)="moreOptions = false" data-id="subscript" *ngIf="false">
+                    <li (click)="moreOptions = false" data-id="subscript">
                         <button [class.active]="toolbarConfig?.subscript" data-id="subscript">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                         <path d="M576 0l-223.4 367.8-240.2-367.8h-112.4l296.6 448-296.6 462h112.4l240.4-381.8 223.2 381.8h112.4l-279.6-462 279.6-448zM965.4 831.8v0c37.4-37.4 58.6-89 58.6-141.8 0-78.2-63.8-142-142-142s-142 63.8-142 142v46h92v-46c0-27.6 22.4-50 50-50s50 22.4 50 50c0 28.6-11.6 56.6-31.8 76.6l-160.2 160.4v97h284v-92h-159l100.4-100.2z"></path>
@@ -561,7 +561,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 </button>
             </div>
             <!-- Superscript -->
-            <div class="col" data-id="superscript" *ngIf="false">
+            <div class="col" data-id="superscript">
                 <button [class.active]="toolbarConfig?.superscript" data-id="superscript" [csTooltip]="'Superscript'"
                     placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
@@ -570,7 +570,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 </button>
             </div>
             <!-- Subscript -->
-            <div class="col" data-id="subscript" *ngIf="false">
+            <div class="col" data-id="subscript">
                 <button [class.active]="toolbarConfig?.subscript" data-id="subscript" [csTooltip]="'Subscript'"
                     placement="bottom" delay="0" type="button" [tooltipMandatory]="true">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">

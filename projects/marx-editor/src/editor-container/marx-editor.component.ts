@@ -553,9 +553,9 @@ export class MarxEditorComponent
         break;
       case 'para': document.execCommand('formatBlock', false, 'p');
         break;
-      case 'superscript': this.insertSupTag();
+      case 'superscript':  document.execCommand("superscript", false, null);
                            break;
-      case 'subscript': this.insertSubTag();
+      case 'subscript':  document.execCommand("subscript", false, null);
                         break;
       case 'link': this.insertLink(value);
                    break;
@@ -675,66 +675,6 @@ export class MarxEditorComponent
       range.collapse();
     } else {
       this.reachTextNode('blockquote');
-    }
-  }
-
-  /**
-  * Function inserts sup tag inside the editor
-  */
-  insertSupTag(): void {
-    let flag = 0;
-    if (this.toolbarConfig.subscript) {
-      this.reachTextNode('sub');
-      flag = 1;
-    }
-    if (!this.toolbarConfig.superscript) {
-      const sup = document.createElement('sup');
-      sup.innerHTML = this.sel.toString() || '&#8204;';
-      let range: Range;
-      if(flag) {
-        range = this.sel.getRangeAt(0).cloneRange();
-      } else {
-        range = this.oldRange.cloneRange() ?? this.sel.getRangeAt(0).cloneRange();
-      }
-      range.deleteContents();
-      range.insertNode(sup);
-      range.setStart(sup, 1);
-      range.setEnd(sup, 1);
-      range.collapse();
-      this.sel.removeAllRanges();
-      this.sel.addRange(range);
-    } else {
-      this.reachTextNode('sup');
-    }
-  }
-
-  /**
-  * Function inserts sub tag inside the editor
-  */
-  insertSubTag(): void {
-    let flag = 0;
-    if (this.toolbarConfig.superscript) {
-      this.reachTextNode('sup');
-      flag = 1;
-    }
-    if (!this.toolbarConfig.subscript) {
-      const sub = document.createElement('sub');
-      sub.innerHTML = this.sel.toString() || '&#8204;';
-      let range: Range;
-      if(flag) {
-        range = this.sel.getRangeAt(0).cloneRange();
-      } else {
-        range = this.oldRange.cloneRange() ?? this.sel.getRangeAt(0).cloneRange();
-      }
-      range.deleteContents();
-      range.insertNode(sub);
-      range.setStart(sub, 1);
-      range.setEnd(sub, 1);
-      range.collapse();
-      this.sel.removeAllRanges();
-      this.sel.addRange(range);
-    } else {
-      this.reachTextNode('sub');
     }
   }
 

@@ -194,7 +194,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
         </div>
         <!-- Font-Size -->
         <div class="col" clickOutside (clickOutside)="closeFontSizePopover()" *ngIf="editorConfig?.mode === 'prime'">
-            <button class="lg" (click)="fontSizePopover()" [csTooltip]="'Font Size'" placement="bottom" delay="0"
+            <button (click)="fontSizePopover()" [csTooltip]="'Font Size'" placement="bottom" delay="0"
                 type="button" [tooltipMandatory]="true">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -217,7 +217,7 @@ const template = `<div class="editor-menu" (click)="buttonClicked($event)">
                 <ul class="option-list">
                     <li *ngFor="let size of [12,14,18,24,32,36,48]" attr.data-id="fontsize-{{size}}"
                         (click)="fontSize = false;">
-                        <button attr.data-id="fontsize-{{size}}">{{size}}</button>
+                        <button attr.data-id="{{size}}">{{size}}</button>
                     </li>
                 </ul>
             </div>

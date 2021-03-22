@@ -14,6 +14,7 @@ import template from './editor-menu.component.html';
   template: template + ``,
   styleUrls: ['./editor-menu.component.less', '../theme.less'],
 })
+
 export class EditorMenuComponent implements AfterViewInit {
   @Input() editorConfig: EditorConfig;
   @Input() toolbarConfig: ToolbarConfig;
@@ -22,9 +23,6 @@ export class EditorMenuComponent implements AfterViewInit {
   @Output() sendSavedFiles: EventEmitter<any> = new EventEmitter();
   @Output() imageInEditor: EventEmitter<any> = new EventEmitter();
   @Output() linkInEditor: EventEmitter<any> = new EventEmitter();
-  @Output() menuLeftWidth: EventEmitter<any> = new EventEmitter();
-  @Output() menuRightWidth: EventEmitter<any> = new EventEmitter();
-
   @Output() setWidth: EventEmitter<any> = new EventEmitter();
   @ViewChild('menuLeft') menuLeft: ElementRef;
   @ViewChild('menuRight') menuRight: ElementRef;
@@ -69,12 +67,13 @@ export class EditorMenuComponent implements AfterViewInit {
     this.fillColor = Array(2).fill(false);
     this.image = null;
     this.fontType = ['verdana', 'arial', 'georgia', 'impact', 'courier new', 'tahoma']
+    // console.log("FILL ARRAY",this.fillColor)
   }
 
   ngAfterViewInit() {
-    const left: number = this.menuLeft?.nativeElement?.offsetWidth;
-    const right: number = this.menuRight?.nativeElement?.offsetWidth;
-    this.setWidth.emit({left,right});
+      const left: number = this.menuLeft?.nativeElement?.offsetWidth;
+      const right: number = this.menuRight?.nativeElement?.offsetWidth;
+      this.setWidth.emit({left,right});
   }
 
   /**
@@ -83,9 +82,8 @@ export class EditorMenuComponent implements AfterViewInit {
    */
   buttonClicked(event: any): void {
     event.stopPropagation();
-    // console.log(event);
     if (event?.target?.dataset?.id) {
-          this.buttonClick.emit(event?.target?.dataset);
+        this.buttonClick.emit(event?.target?.dataset);
     }
   }
 
@@ -101,11 +99,10 @@ export class EditorMenuComponent implements AfterViewInit {
     this.color = false;
   }
 
-  
   /**
    * Opens the color tab
    */
-   openColorTab(): void {
+  openColorTab(): void {
     this.color = !this.color;
     if(this.fillColor.every(item => item === false)) {
       this.fillColor[0] = true;
@@ -139,7 +136,7 @@ export class EditorMenuComponent implements AfterViewInit {
     this.uploadImage = false;
   }
 
-   /**
+  /**
    * @param event - Dropped event triggered
   */
   dropImage(event: any) {
@@ -315,15 +312,14 @@ export class EditorMenuComponent implements AfterViewInit {
     const rex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     if(!this.linkUrl || !this.linkUrl?.match(rex)) { //check url is valid or not
         this.invalidUrlMessage = true
-    }
-    else {  
+    } else {
       if(!this.linkText) {
         this.linkText = this.linkUrl;
       }
       const obj = {        
             value: {
               linkUrl:this.linkUrl,
-              linkText:this.linkText?.trim() ?? this.linkUrl,
+              linkText:this.linkText?.trim() ?? '',
               linkTitle:this.linkTitle?.trim() ?? ''
             },
             id: 'link'
@@ -475,3 +471,4 @@ export class EditorMenuComponent implements AfterViewInit {
     this.showAlert = false;
   }
 }
+

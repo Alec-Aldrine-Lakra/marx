@@ -1,4 +1,4 @@
-const template = `<!-- <p>editor-menu works!</p> -->
+const template = `
 <div class="editor-menu" (click)="buttonClicked($event)">
     <div class="left" #menuLeft>
         <!-- Bold -->

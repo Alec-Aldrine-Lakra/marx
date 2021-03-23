@@ -62,7 +62,6 @@ const template = `
                     </path>
                 </svg>
             </button>
-
             <div class="popover small" *ngIf="listStyle" (click)="closeListStylesPopover()">
                 <ul class="option-list">
                     <li data-id="orderedList">
@@ -277,99 +276,36 @@ const template = `
         </div>
         <!-- Link -->
         <div class="col" clickOutside *ngIf="editorConfig?.link">
-            <button (click)="addLink = true;" [class.active]="addLink" [csTooltip]="'Add a Link'" placement="bottom"
+            <button (click)="addLink = true; openModal('link-modal');" [class.active]="addLink" [csTooltip]="'Add a Link'" placement="bottom"
                 delay="0" type="button" [tooltipMandatory]="true">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                     <path d="M931 478.8l-84.4-84.4c-18.2-18.2-48-18.2-66.2 0-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l84.4 84.4c87.6 87.6 87.6 231 0 319.6-87.6 87.6-231 87.6-319.6 0l-84.4-84.4c-8.8-8.8-20.6-13.8-33.2-13.8s-24.2 4.8-33.2 13.8c-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l84.6 84.6c60.6 59.6 141 92.6 226.4 92.6 85.6 0 165.8-33 225.8-93.2 123.8-125.4 123.6-328.2-0.2-452zM478.8 159.2l84.4 84.4c8.8 8.8 20.6 13.8 33.2 13.8s24.2-4.8 33.2-13.8c8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-84.6-84.6c-125.4-123.6-328.2-123.4-452.2 0.4-123.8 125.4-123.6 328.2 0.2 452l84.4 84.4c8.8 8.8 20.6 13.8 33.2 13.8s24.2-4.8 33.2-13.8c8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-84.4-84.4c-87.6-87.6-87.6-231 0-319.6 87.4-87.4 230.8-87.4 319.4 0.2zM620.6 667.6c12.6 0 24.2-4.8 33.2-13.8 8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-217.4-217.2c-8.8-8.8-20.6-13.8-33.2-13.8s-24.2 4.8-33.2 13.8c-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l217.2 217.2c9.2 8.8 21 13.8 33.4 13.8z"></path>
                 </svg>
             </button>
-            <div class="popup-mask link" *ngIf="addLink" [style.zIndex]="editorConfig.popupZIndex | pzIndex:3">
-                <div class="popover attach">
-                    <div class="head">
-                        <h3>Insert Link</h3>
-                        <button class="close" (click)="closeAddLinksPopover()" type="button">&times;</button>
-                    </div>
-                    <div class="link">
-                        <label>{{editorConfig?.urlValue ? editorConfig?.urlValue : 'URL'}}</label>
-                        <input [(ngModel)]="linkUrl" type="text"
-                            placeholder="{{editorConfig?.urlInputPlaceHolder ? editorConfig?.urlInputPlaceHolder : 'Enter a URL (Example: https://example.com)'}}">
-                        <p class="error" *ngIf="invalidUrlMessage">{{editorConfig?.validUrlMsg ?
-                            editorConfig?.validUrlMsg : 'Please provide a valid URL.'}}</p>
-                    </div>
-
-                    <div class="link">
-                        <label>{{editorConfig?.urlText ? editorConfig?.urlText : 'Display Text'}}</label>
-                        <input [(ngModel)]="linkText" type="text"
-                            placeholder="{{editorConfig?.textInputPlaceHolder ? editorConfig?.textInputPlaceHolder : 'Enter a display text'}}">
-                    </div>
-                    <div class="link">
-                        <label>{{editorConfig?.urlTitle ? editorConfig?.urlTitle : 'Title'}}</label>
-                        <input [(ngModel)]="linkTitle" type="text"
-                            placeholder="{{editorConfig?.titlePlaceholder? editorConfig?.titlePlaceholder: 'Enter a title'}}">
-                    </div>
-                    <div class="footer">
-                        <button class="cancel" (click)="closeAddLinksPopover()" type="button">Cancel</button>
-                        <button type="button" (click)="saveLink()" class="upload">Save</button>
-
-                    </div>
-                </div>
-            </div>
+            <marx-modal id="link-modal-{{editorConfig?.id}}" role="dialog">
+                <marx-link 
+                    [editorConfig]="editorConfig" 
+                    (linkEmitter)="saveLink($event)" 
+                    (closeEmitter)="closeModal('link-modal')">
+                </marx-link>
+            </marx-modal>
         </div>
         <!-- Attachment -->
         <div class="col" clickOutside *ngIf="editorConfig?.file">
-            <button (click)="upload = true" [class.active]="upload" [csTooltip]="'Upload Files'" placement="bottom"
+            <button (click)="upload = true; openModal('file-modal')" [class.active]="upload" [csTooltip]="'Upload Files'" placement="bottom"
                 delay="0" type="button" [tooltipMandatory]="true">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
                     <path d="M790.856 698.291v69.72h-533.776q-106.764 0-181.922-74.089t-75.158-180.853 75.158-181.922 181.922-75.158h579.559q76.274 0 131.817 55.544t55.544 131.817-55.544 130.748-131.817 54.474h-488.039q-47.92 0-81.712-33.791t-33.791-81.712 33.791-82.78 81.712-34.86h442.303v69.72h-442.303q-19.614 0-32.676 14.176t-13.060 33.791 13.060 32.676 32.676 13.060h488.039q47.92 0 82.78-33.791t34.86-81.712-34.86-82.78-82.78-34.86h-579.559q-76.274 0-131.817 55.544t-55.544 131.817 55.544 130.748 131.817 54.474h533.776z"></path>
                 </svg>
             </button>
-            <div class="popup-mask" *ngIf="upload" [style.zIndex]="editorConfig.popupZIndex | pzIndex:3">
-                <div class="popover attach">
-                    <div class="head">
-                        <h3>Attach Files</h3>
-                        <button class="close" (click)="closeAttachPopover()" type="button">&times;</button>
-                    </div>
-                    <div class="drag-drop" (dragenter)="dragenter($event)" (dragover)="dragover($event)"
-                        (dragend)="dragend($event)" (dragleave)="dragleave($event)" (drop)="dropFiles($event)"
-                        [class.enter]="enter">
-                        <input type="file" id="browse" (change)="filesFromInput($event)" multiple>
-                        <div class="container">
-                            <span>Drop files here or browse to upload</span>
-                            <label for="browse">Browse</label>
-                        </div>
-                    </div>
-                    <div class="file-row">
-                        <div class="file-col" *ngFor="let fileObj of filesArray; let i = index">
-                            <button (click)="removeFile(i)" type="button">
-                                <span>&times;</span>
-                            </button>
-                            <div class="file-item">
-                                <div class="file-image">
-                                    <span class="file {{fileObj.extension}}">
-                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="2672" height="1024"
-                                            viewBox="0 0 2672 1024">
-                                            <g id="icomoon-ignore">
-                                            </g>
-                                            <path
-                                                d="M2662.047 170.706c0-94.256-76.39-170.647-170.647-170.647h-2320.8c-94.256 0-170.647 76.391-170.647 170.647s76.391 170.647 170.647 170.647h2320.8c94.257 0 170.647-76.391 170.647-170.647zM170.601 682.647c-94.256 0-170.647 76.391-170.647 170.647s76.391 170.647 170.647 170.647h784.977c94.257 0 170.647-76.39 170.647-170.647s-76.39-170.647-170.647-170.647h-784.977z">
-                                            </path>
-                                        </svg>
-                                        <span class="format">
-                                            {{fileObj.extension}}
-                                        </span>
-                                    </span>
-                                </div>
-                                <p class="file-title" [csTooltip]="fileObj.file.name" placement="bottom" delay="0"
-                                    type="black" [tooltipMandatory]="true">{{fileObj.file.name}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <button class="cancel" (click)="closeAttachPopover()" type="button">Cancel</button>
-                        <button (click)="saveFiles()" class="upload" type="button" [class.disabled]="filesArray.length === 0">Save</button>
-                    </div>
-                </div>
-            </div>
+
+            <marx-modal id="file-modal-{{editorConfig?.id}}" role="dialog">
+                <marx-files 
+                    (filesEmitter)="saveFiles($event)" 
+                    (closeEmitter)="closeModal('file-modal')">
+                </marx-files>
+            </marx-modal>
+           
         </div>
         <!-- Image -->
         <div class="col" clickOutside *ngIf="editorConfig?.mode === 'prime' && false">

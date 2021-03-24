@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalService } from '../modal.service';
 import template from './modal.component.html';
 
@@ -8,13 +8,25 @@ import template from './modal.component.html';
   styleUrls: ['./modal.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class MarxModalComponent implements OnInit {
+export class MarxModalComponent implements OnInit, OnChanges {
 
   @Input() id: string;
+  @Input() zIndexValue: number;
   private element: any;
 
   constructor(private modalService: ModalService, private el: ElementRef) {
       this.element = el.nativeElement;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.zIndexValue) {
+      this.zIndexValue =  this.zIndexValue ?? 100000;
+      if(this.zIndexValue > 2147483647) {
+          this.zIndexValue = 2147483647;
+      } else if (this.zIndexValue < -2147483647) {
+          this.zIndexValue = -2147483647;
+      }
+    }
   }
 
   ngOnInit(): void {

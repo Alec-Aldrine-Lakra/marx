@@ -60,7 +60,7 @@ export class MarxEditorComponent
   clicked = false;
   moreOptionsButton: boolean;
   isCollapsible: boolean;
-  menuLeftWidth: number = 600;
+  menuLeftWidth: number;
   menuRightWidth: number;
 
   constructor() {
@@ -68,6 +68,9 @@ export class MarxEditorComponent
     this.backgroundColor = 'white';
     this.toolbarPlacement = 'bottom';
     this.resetToolbar();
+    this.editorConfig = {
+      id: nanoid()
+    };
     this.mentionConfig = {
       mentions: []
     };
@@ -256,7 +259,6 @@ export class MarxEditorComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.editorConfig && this.editorConfig) {
       this.editorConfig.id = this.editorConfig.id || nanoid();
-
       this.mentionConfig = {
         mentions: []
       };

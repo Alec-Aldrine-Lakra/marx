@@ -383,6 +383,7 @@ export class EditorLinkComponent {
     this.linkText = '';
     this.linkTitle = '';
     this.linkUrl = '';
+    this.invalid = false;
   }
 
    /**

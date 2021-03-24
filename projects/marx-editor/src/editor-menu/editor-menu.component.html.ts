@@ -282,7 +282,7 @@ const template = `
                     <path d="M931 478.8l-84.4-84.4c-18.2-18.2-48-18.2-66.2 0-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l84.4 84.4c87.6 87.6 87.6 231 0 319.6-87.6 87.6-231 87.6-319.6 0l-84.4-84.4c-8.8-8.8-20.6-13.8-33.2-13.8s-24.2 4.8-33.2 13.8c-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l84.6 84.6c60.6 59.6 141 92.6 226.4 92.6 85.6 0 165.8-33 225.8-93.2 123.8-125.4 123.6-328.2-0.2-452zM478.8 159.2l84.4 84.4c8.8 8.8 20.6 13.8 33.2 13.8s24.2-4.8 33.2-13.8c8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-84.6-84.6c-125.4-123.6-328.2-123.4-452.2 0.4-123.8 125.4-123.6 328.2 0.2 452l84.4 84.4c8.8 8.8 20.6 13.8 33.2 13.8s24.2-4.8 33.2-13.8c8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-84.4-84.4c-87.6-87.6-87.6-231 0-319.6 87.4-87.4 230.8-87.4 319.4 0.2zM620.6 667.6c12.6 0 24.2-4.8 33.2-13.8 8.8-8.8 13.8-20.6 13.8-33.2s-4.8-24.2-13.8-33.2l-217.4-217.2c-8.8-8.8-20.6-13.8-33.2-13.8s-24.2 4.8-33.2 13.8c-8.8 8.8-13.8 20.6-13.8 33.2s4.8 24.2 13.8 33.2l217.2 217.2c9.2 8.8 21 13.8 33.4 13.8z"></path>
                 </svg>
             </button>
-            <marx-modal id="link-modal-{{editorConfig?.id}}" role="dialog">
+            <marx-modal id="link-modal-{{editorConfig?.id}}" role="dialog" [zIndexValue]="editorConfig?.zIndex">
                 <marx-link 
                     [editorConfig]="editorConfig" 
                     (linkEmitter)="saveLink($event)" 
@@ -299,7 +299,7 @@ const template = `
                 </svg>
             </button>
 
-            <marx-modal id="file-modal-{{editorConfig?.id}}" role="dialog">
+            <marx-modal id="file-modal-{{editorConfig?.id}}" role="dialog" [zIndexValue]="editorConfig?.zIndex">
                 <marx-files 
                     (filesEmitter)="saveFiles($event)" 
                     (closeEmitter)="closeModal('file-modal')">

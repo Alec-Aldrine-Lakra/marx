@@ -11,14 +11,16 @@ export interface EditorConfig {
     disabledButton?: boolean;
     isCollapsible?: boolean;
     link?: boolean;
-    urlValue?:string;
-    urlText?:string;
-    urlTitle?:string;
+    urlValue?: string;
+    urlText?: string;
+    urlTitle?: string;
     configFontStyle?: boolean;
-    validUrlMessage?:string;
-    urlPlaceHolder?:string;
-    textPlaceHolder?:string;
-    titlePlaceholder?:string;
+    validUrlMessage?: string;
+    urlPlaceHolder?: string;
+    textPlaceHolder?: string;
+    titlePlaceholder?: string;
+    maxHeight?: string;
+    zIndex?: number;
 }
 
 export interface MentionedName {

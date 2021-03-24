@@ -65,6 +65,8 @@ The following optional keys can be used
 | configFontStyle  | boolean                                     | Optional field that enables or disables font-style option in editor i.e H1, H2, H3 & P tags
 | file             | boolean                                     | Optional field to enable or disable file upload option inside the editor. |
 | id               | string                                      | Optional field to add a unique id for each instance of editor, by default each instance of editor created has a unique id |
+| zIndex           | number                                      | Optional field to set zIndex of the add link or add files popup , default is 100000 |
+| maxHeight        | string                                      | Optional field to set max-height of editor after which scrollbar appears inside the editor |
 | placeholder      | string                                      | Optional field to display a message when editor is empty. |
 | toolbarPlacement | 'top' or 'bottom'                           | Optional field to diplay the toolbar at the top or bottom, by default the toolbar is placed at the bottom |
 | colorPalette     | boolean                                     | Optional field to enable or disable font and text-background color options in toolbar. |

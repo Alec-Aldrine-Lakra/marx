@@ -361,6 +361,7 @@ export class EditorMenuComponent implements AfterViewInit {
   template: linkTemplate + ``,
   styleUrls: ['./editor-menu.component.less', '../theme.less'],
 })
+
 export class EditorLinkComponent {
   @Input() editorConfig: EditorConfig;
   @Output() linkEmitter: EventEmitter<{linkUrl: string, linkTitle: string, linkText: string}> = new EventEmitter();
@@ -371,9 +372,22 @@ export class EditorLinkComponent {
   rex: RegExp;
   invalid: boolean;
   constructor() {
+    this.reset();
     this.rex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
   }
 
+  /**
+   * Reset the values
+   */
+  reset(): void {
+    this.linkText = '';
+    this.linkTitle = '';
+    this.linkUrl = '';
+  }
+
+   /**
+   * Save the link
+   */
   save(): void {
     if(!this.linkUrl || !this.linkUrl?.match(this.rex)) { //check url is valid or not
         this.invalid = true;
@@ -389,7 +403,11 @@ export class EditorLinkComponent {
     }
   }
 
+   /**
+   * Close the popup
+   */
   close(): void {
+    this.reset();
     this.closeEmitter.emit(null);
   }
 }
@@ -400,6 +418,7 @@ export class EditorLinkComponent {
   template: fileTemplate + ``,
   styleUrls: ['./editor-menu.component.less', '../theme.less'],
 })
+
 export class EditorFilesComponent {
   @Input() editorConfig: EditorConfig;
   @Output() filesEmitter: EventEmitter<any[]> = new EventEmitter();
@@ -408,6 +427,13 @@ export class EditorFilesComponent {
   filesArray: any[];
 
   constructor() {
+    this.reset();
+  }
+
+  /**
+   * Reset the values
+   */
+  reset(): void {
     this.filesArray = [];
   }
 
@@ -417,6 +443,7 @@ export class EditorFilesComponent {
   }
 
   close(): void {
+    this.reset();
     this.closeEmitter.emit();
   }
 
@@ -494,7 +521,7 @@ export class EditorFilesComponent {
     for (let i = 0; i <  event.target.files.length; i++) {
       this.filesArray.push({file: event.target.files[i], extension: this.getFileExtension(event.target.files[i])});
     }
-    event.target.value = ''
+    event.target.value = '';
   }
 
   /**

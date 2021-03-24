@@ -460,14 +460,17 @@ export class MarxEditorComponent
     output = output.replace(cS, '');
     let tS = new RegExp('<(/)*(meta|link|\\?xml:|st1:|o:|font)(.*?)>', 'gi');
     output = output.replace(tS, '');
-    const bT = ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'button', 'meta', 'iframe', 'input', 'form'];
+    const bT = ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'button', 'meta', 'iframe', 'form', 'select'];
 
     for (let i = 0; i < bT.length; i++) {
       tS = new RegExp('<' + bT[i] + '\\b.*>.*</' + bT[i] + '>', 'gi');
       output = output.replace(tS, '');
     }
 
-    const bA = ['start', 'class', 'id', 'onclick'];
+    const bA = ['start', 'class', 'id', 'onkeydown', 'onkeyup', 'onkeypress',
+    'onclick', 'onerror', 'onload', 'oncontextmenu', 'ondblclick', 'onmousedown', 'onmouseenter', 
+    'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 
+    'onmouseup', 'onchange', 'oncut'];
     for (let ii = 0; ii < bA.length; ii++ ) {
       let aS = new RegExp(' ' + bA[ii] + '=[\'|"](.*?)[\'|"]', 'gi');
       output = output.replace(aS, '');
